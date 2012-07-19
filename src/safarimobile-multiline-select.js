@@ -31,13 +31,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (function () {
     "use strict";
 
-    // SimpleExpand 
-    function SelectConverter() {
+    // set isSafari to true to bypass user agent check when 
+    // testing in a browser other than safari mobile 
+    function SelectConverter(forceSafariMobileMode) {
         
-        // set this to true to bypass user agent check when 
-        // testing in a browser other than safari mobile 
-        var testMode = false; 
-
         var that = this;
 
         var styles =
@@ -52,7 +49,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
         that.isSafariMobile = function () {
-            return (navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/)) || testMode;
+            return (navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/)) || forceSafariMobileMode;
         };
 
         that.selectIsMultiline = function (item) {
@@ -71,7 +68,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
             var selectid = select.attr("id");
             if ( selectid !== undefined ){
-                ul.attr("id", selectid + "_safarimobile")    
+                ul.attr("id", selectid + "_safarimobile");
             }
 
             select.children('option').each(function (option) {
@@ -133,8 +130,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     window.SelectConverter = SelectConverter;
 
     // expose SelectConverter as a jQuery plugin
-    $.fn.fixForSafariMobile = function () {
-        var instance = new SelectConverter();
+    $.fn.fixForSafariMobile = function (forceSafariMobileMode) {
+        var instance = new SelectConverter(forceSafariMobileMode);
         instance.fixForSafariMobile(this);
         return this;
     };
