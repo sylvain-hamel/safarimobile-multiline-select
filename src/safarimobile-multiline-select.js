@@ -36,7 +36,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         
         // set this to true to bypass user agent check when 
         // testing in a browser other than safari mobile 
-        var testMode = true; 
+        var testMode = false; 
 
         var that = this;
 
