@@ -1,0 +1,3 @@
+/* Copyright (C) 2012 Sylvain Hamel
+Project: https://github.com/redhotsly/safarimobile-multiline-select
+MIT Licence: https://raw.github.com/redhotsly/safarimobile-multiline-select/master/licence-mit.txt */
