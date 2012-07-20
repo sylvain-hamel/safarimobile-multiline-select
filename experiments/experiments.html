@@ -4,16 +4,17 @@
 		<script type="text/javascript" src="../src/safarimobile-multiline-select.js"></script>
 		<script type="text/javascript">
 		$().ready(function () {
-			$("select").fixForSafariMobile();
+			$("select").fixForSafariMobile(true);
 		})
 		</script>
 		<style type="text/css">
-	    #select1_safarimobile { height: 200px;  width:200px; } 
+	    #select1_safarimobile { height: auto;  width:200px; } 
 	    #select2_safarimobile { height: 100px;  width:150px; } 
 		</style>
 	</head>
 	<body>
 		<h1>List 1</h1>
+		Select a country: 
 		<select size="12" id="select1">
 			<option value="1">Alabama</option>
 			<option value="2">Alaska</option>
@@ -37,6 +38,7 @@
 			<option value="20">Maryland</option>
 		</select>
 		<h1>List 2</h1>
+		Select a country: 
 		<select size="12" id="select2">
 			<option value="1">Massachusett</option>
 			<option value="2">Michigan</option>

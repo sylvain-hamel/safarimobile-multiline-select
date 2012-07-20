@@ -41,10 +41,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         '<style type="text/css">' +
         '    /* styles for the safarimobile-multiline-select plug-in */ \r\n'  +
         '    .multilineselect {border: 1px solid silver; display:inline-block; margin:0px; padding:2px; height: 100px; overflow:auto; width:300px; vertical-align: text-bottom;} \r\n' +
-        '    .multilineselect li {list-style-type: none; list-style-position:inside; margin:0px; padding:0px; cursor:default ; }  \r\n' + 
-        '    .multilineselect li a {text-decoration: none; color: black; width: 100%:display:inline-block;}  \r\n' +
+        '    .multilineselect li {list-style-type: none; list-style-position:inside; margin:0px; padding:0px; cursor:default;}  \r\n' + 
         '    .multilineselect li.selected {color: white; background-color: darkgrey;}  \r\n' +
-        '    .multilineselect li.selected a {color: white; background-color: darkgrey;}  \r\n' +
         '</style>';
 
 
@@ -71,12 +69,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 ul.attr("id", selectid + "_safarimobile");
             }
 
-            select.children('option').each(function (option) {
-                var $option = $(this);
+            select.children('option').each(function() {
+                var option = $(this);
                 
                 var li = $('<li>');
-                li.attr('data-value', $option.val());
-                li.html($option.html());
+                li.attr('data-value', option.val());
+                li.html(option.html());
 
                 // when items is clicked, push value to the original <select>
                 li.click(function() {
@@ -97,7 +95,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             return ul;
         };
 
-        that.fixForSafariMobile = function (jquery) {
+        that.fixForSafariMobile = function (selectElements) {
             if (!that.isSafariMobile())
             {
                 return;
@@ -105,19 +103,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
             $("head").prepend(styles);
 
-            // Plug-in entry point
-            jquery.each(function () {
+            selectElements.each(function () {
                 var select = $(this);
-
-                // hide the select element but keep it in the DOM to allow existing code to
-                // keep on binding to it 
-                select.hide();
 
                 if ( !that.selectIsMultiline(select))
                 {
                     return;
                 }
 
+                // hide the select element but keep it in the DOM to allow existing code to
+                // keep on binding to it 
+                select.hide();
                 var newlist = that.createListFromSelectElement(select);
 
                 select.after(newlist);
