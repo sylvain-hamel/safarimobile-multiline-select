@@ -28,7 +28,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ===============================================================
 */
 /*global $:false, window:false, navigator:false */
-(function () {
+(function ($) {
     "use strict";
 
     // set isSafari to true to bypass user agent check when 
@@ -40,14 +40,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         var styles =
         '<style type="text/css">' +
         '    /* styles for the safarimobile-multiline-select plug-in */ \r\n'  +
-        '    .multilineselect {border: 1px solid silver; display:inline-block; margin:0px; padding:2px; height: 100px; overflow:auto; width:300px; vertical-align: text-bottom;} \r\n' +
+        '    .multilineselect {border: 1px solid silver; display:inline-block; margin:0px; padding:2px; height: 100px; overflow:auto;  -webkit-overflow-scrolling: touch; width:300px; vertical-align: text-bottom;} \r\n' +
         '    .multilineselect li {list-style-type: none; list-style-position:inside; margin:0px; padding:0px; cursor:default;}  \r\n' + 
         '    .multilineselect li.selected {color: white; background-color: darkgrey;}  \r\n' +
         '</style>';
 
 
-        that.isSafariMobile = function () {
-            return (navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/)) || forceSafariMobileMode;
+        that.isMobile = function () {
+            return (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) || forceSafariMobileMode;
         };
 
         that.selectIsMultiline = function (item) {
@@ -63,6 +63,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
         that.createListFromSelectElement = function (select) {
             var ul = $('<ul class="multilineselect">');
+            ul.css( $select.attr('class') );
 
             var selectid = select.attr("id");
             if ( selectid !== undefined ){
@@ -73,8 +74,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 var option = $(this);
                 
                 var li = $('<li>');
+                li.addClass( option.attr('class') );
                 li.attr('data-value', option.val());
                 li.html(option.html());
+
+                // If the option is already selected then we add the selected class to the li element.
+                if (option.is(':selected')) {
+                    li.addClass( 'selected' );
+                }
 
                 // when items is clicked, push value to the original <select>
                 li.click(function() {
@@ -96,7 +103,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         };
 
         that.fixForSafariMobile = function (selectElements) {
-            if (!that.isSafariMobile())
+            if (!that.isMobile())
             {
                 return;
             }
@@ -131,4 +138,4 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         instance.fixForSafariMobile(this);
         return this;
     };
-}());
+}(jQuery));
