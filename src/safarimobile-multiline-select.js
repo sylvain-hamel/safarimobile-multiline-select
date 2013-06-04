@@ -63,7 +63,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
         that.createListFromSelectElement = function (select) {
             var ul = $('<ul class="multilineselect">');
-            ul.css( $select.attr('class') );
+            ul.css( select.attr('class') );
 
             var selectid = select.attr("id");
             if ( selectid !== undefined ){
