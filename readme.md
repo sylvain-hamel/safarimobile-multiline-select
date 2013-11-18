@@ -2,7 +2,7 @@
 Safari for mobile ignores the 'size' attribute of \<select\> elements. It always renders a one-line high drop down list instead of a multiline list box.
 
 #Solution
-If the browser not Safari for mobile, this plugin hides the \<select\> and replaces it by something that looks and acts like a list. 
+If the browser is Safari for mobile, this plugin hides the \<select\> and replaces it by something that looks and acts like a list. 
 
 
 #Usage
