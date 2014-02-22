@@ -1,9 +1,4 @@
-/* 
-===============================================================
-jQuery plugin to expand/collapse a content element when a 
-expander element is clicked. When expanding/collapsing the plug-in 
-also toggles a class on the element.
-See https://github.com/redhotsly/simple-expand
+/*
 ===============================================================
 Copyright (C) 2012 Sylvain Hamel
 
@@ -69,27 +64,36 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 ul.attr("id", selectid + "_safarimobile");
             }
 
-            select.children('option').each(function() {
+            var rebuild = function () {
+              select.children('option').each(function() {
                 var option = $(this);
-                
+
                 var li = $('<li>');
                 li.attr('data-value', option.val());
                 li.html(option.html());
 
                 // when items is clicked, push value to the original <select>
                 li.click(function() {
-                    var value = $(this).attr('data-value');
-                    select.val(value);
-                    select.change();                   
+                  var value = $(this).attr('data-value');
+                  select.val(value);
+                  select.change();
                 });
 
                 ul.append(li);
-            });
+              });
+            };
+
+            rebuild();
 
             // when the <select> value change, select the corresponding item in the list
             select.change(function () {
                 var selected = $(this).children('option:selected');
                 that.selectValue(ul, selected.val());
+            });
+
+            $(select).on('item-added', function () {
+              ul.empty();
+              rebuild();
             });
 
             return ul;

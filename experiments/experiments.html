@@ -5,6 +5,10 @@
 		<script type="text/javascript">
 		$().ready(function () {
 			$("select").fixForSafariMobile(true);
+            $("#b1").click(function () {
+                $("#select1").append('<option value="21">21</option>');
+                $("#select1").trigger('item-added');
+            });
 		})
 		</script>
 		<style type="text/css">
@@ -13,6 +17,8 @@
 		</style>
 	</head>
 	<body>
+
+        <button id="b1">Add Item</button>
 		<h1>List 1</h1>
 		Select a country: 
 		<select size="12" id="select1">
@@ -70,5 +76,6 @@
 			<option value="28">West Virginia</option>
 			<option value="29">Wisconsin</option>
 			<option value="30">Wyoming</option>
-		</select>		
+		</select>
+    </body>
 </html>
