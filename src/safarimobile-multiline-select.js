@@ -94,6 +94,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             $(select).on('item-added', function () {
               ul.empty();
               rebuild();
+
+              var selected = $(this).children('option:selected');
+              that.selectValue(ul, selected.val());
             });
 
             return ul;
