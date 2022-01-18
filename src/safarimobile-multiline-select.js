@@ -50,10 +50,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             return  !( value === undefined || value === "1");
         };
 
-        that.selectValue = function(ul, val){
+        that.selectValue = function(ul, selected){
             ul.children('li').removeClass('selected');
-            var toSelect = ul.find('li[data-value="' + val + '"]');
-            toSelect.addClass('selected');
+            
+            for (var i=0; i < selected.length ;i++){
+                var val = selected[i].value;
+                var toSelect = ul.find('li[data-value="' + val + '"]');
+            	toSelect.addClass('selected');
+            }
+            
         };
 
         that.createListFromSelectElement = function (select) {
@@ -64,6 +69,25 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 ul.attr("id", selectid + "_safarimobile");
             }
 
+            var selectedValues = function(value,clicked){
+              var values = [];
+              var selected_li = clicked.parent().children('.selected');                  
+              var isfound = false;
+              for (var i=0 ; i < selected_li.length  ; i++){
+                if (value != selected_li[i].dataset.value ){
+                  values.push(selected_li[i].dataset.value);
+                }else {
+                  isfound = true;
+                }
+              }
+
+              if (isfound == false){
+                  values.push(value);
+              }
+               
+               return values;
+            };
+            
             var rebuild = function () {
               select.children('option').each(function() {
                 var option = $(this);
@@ -73,9 +97,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 li.html(option.html());
 
                 // when items is clicked, push value to the original <select>
-                li.click(function() {
+                li.click(function(e) {
+                  
                   var value = $(this).attr('data-value');
-                  select.val(value);
+                  var values = selectedValues(value,$(this));
+
+                  select.val(values);
                   select.change();
                 });
 
@@ -88,7 +115,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             // when the <select> value change, select the corresponding item in the list
             select.change(function () {
                 var selected = $(this).children('option:selected');
-                that.selectValue(ul, selected.val());
+                that.selectValue(ul, selected);
             });
 
             $(select).on('item-added', function () {
@@ -96,7 +123,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
               rebuild();
 
               var selected = $(this).children('option:selected');
-              that.selectValue(ul, selected.val());
+              that.selectValue(ul, selected);
             });
 
             return ul;
