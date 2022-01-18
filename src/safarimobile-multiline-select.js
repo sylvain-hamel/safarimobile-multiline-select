@@ -69,35 +69,21 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 ul.attr("id", selectid + "_safarimobile");
             }
 
-            var selectedValues = function(e,value,clicked){
+            var selectedValues = function(value,clicked){
               var values = [];
               var selected_li = clicked.parent().children('.selected');                  
-              if (e.ctrlKey && selected_li.length > 0){
-                var isfound = false;
-                for (var i=0 ; i < selected_li.length  ; i++){
-                  if (value != selected_li[i].dataset.value ){
-                    values.push(selected_li[i].dataset.value);
-                  }else {
-                    isfound = true;
-                  }
+              var isfound = false;
+              for (var i=0 ; i < selected_li.length  ; i++){
+                if (value != selected_li[i].dataset.value ){
+                  values.push(selected_li[i].dataset.value);
+                }else {
+                  isfound = true;
                 }
-                if (isfound == false){
-                  values.push(value);
-                }
-              
-              } else if (e.shiftKey && selected_li.length > 0){
-                var last_li = selected_li[selected_li.length - 1];                    
-                var p1= $(last_li).index();
-                var p2 = clicked.index();
-                var li_list = clicked.parent().children();
+              }
 
-                for (var i = Math.min(p1, p2); i <= Math.max(p1, p2); ++i) {
-                  values.push(li_list[i].dataset.value);
-                }
-                    
-               } else {
-                 values.push(value);
-               }
+              if (isfound == false){
+                  values.push(value);
+              }
                
                return values;
             };
@@ -114,7 +100,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 li.click(function(e) {
                   
                   var value = $(this).attr('data-value');
-                  var values = selectedValues(e,value,$(this));
+                  var values = selectedValues(value,$(this));
 
                   select.val(values);
                   select.change();
